@@ -8,14 +8,14 @@ export function OutputNode() {
   const [isRunning, setIsRunning] = useState(false)
 
   return (
-    <div className={'bg-white shadow-xl p-[20px]'}>
+    <div className="bg-white shadow-xl p-[20px]">
       <Handle type="target" position={Position.Top} />
 
       <div>
         <p>输出节点</p>
         <button
           onClick={() => {
-            setIsRunning((isRunning) => !isRunning)
+            setIsRunning(isRunning => !isRunning)
             toggleAudio()
           }}
         >

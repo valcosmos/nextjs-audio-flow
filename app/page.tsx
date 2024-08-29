@@ -1,26 +1,25 @@
 'use client'
 
-
+import type {
+  Connection,
+  Edge,
+  Node,
+} from '@xyflow/react'
+import {
+  Background,
+  BackgroundVariant,
+  Controls,
+  MiniMap,
+  ReactFlow,
+  addEdge,
+  useEdgesState,
+  useNodesState,
+} from '@xyflow/react'
 import { connect } from '@/components/Audio'
 import { OscillatorNode } from '@/components/OscillatorNode'
 import { OutputNode } from '@/components/OutputNode'
 import { VolumeNode } from '@/components/VolumeNode'
-import {
-  addEdge,
-  Background,
-  BackgroundVariant,
-  Connection,
-  Controls,
-  Edge,
-  Node,
-  MiniMap,
-  OnConnect,
-  ReactFlow,
-  useEdgesState,
-  useNodesState
-} from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
-
 
 const initialNodes: Node[] = [
   // { id: '1', position: { x: 0, y: 0 }, data: { frequency: 300, type: 'square' }, type: 'osc' },
@@ -30,20 +29,20 @@ const initialNodes: Node[] = [
     id: 'a',
     type: 'osc',
     data: { frequency: 220, type: 'square' },
-    position: { x: 200, y: 0 }
+    position: { x: 200, y: 0 },
   },
   {
     id: 'b',
     type: 'volume',
     data: { gain: 0.5 },
-    position: { x: 150, y: 250 }
+    position: { x: 150, y: 250 },
   },
   {
     id: 'c',
     type: 'out',
     data: {},
-    position: { x: 350, y: 400 }
-  }
+    position: { x: 350, y: 400 },
+  },
 ]
 // const initialEdges = [
 //   { id: 'e1-2', source: '1', target: '2' },
@@ -51,11 +50,10 @@ const initialNodes: Node[] = [
 // ]
 const initialEdges: Edge[] = []
 
-
 const nodeTypes = {
   osc: OscillatorNode,
   volume: VolumeNode,
-  out: OutputNode
+  out: OutputNode,
 }
 
 export default function Home() {
@@ -64,7 +62,7 @@ export default function Home() {
 
   const onConnect = (params: Connection) => {
     connect(params.source, params.target)
-    setEdges((eds) => addEdge(params, eds))
+    setEdges(eds => addEdge(params, eds))
   }
 
   return (
