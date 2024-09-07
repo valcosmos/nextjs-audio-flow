@@ -1,24 +1,24 @@
 'use client'
 
-import type {
-  Connection,
-  Edge,
-  Node,
-} from '@xyflow/react'
+import { connect } from '@/components/Audio'
+import { OscillatorNode } from '@/components/OscillatorNode'
+import { OutputNode } from '@/components/OutputNode'
+import { VolumeNode } from '@/components/VolumeNode'
 import {
+  addEdge,
   Background,
   BackgroundVariant,
   Controls,
   MiniMap,
   ReactFlow,
-  addEdge,
   useEdgesState,
   useNodesState,
 } from '@xyflow/react'
-import { connect } from '@/components/Audio'
-import { OscillatorNode } from '@/components/OscillatorNode'
-import { OutputNode } from '@/components/OutputNode'
-import { VolumeNode } from '@/components/VolumeNode'
+import type {
+  Connection,
+  Edge,
+  Node,
+} from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 
 const initialNodes: Node[] = [

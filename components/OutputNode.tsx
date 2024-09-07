@@ -14,6 +14,7 @@ export function OutputNode() {
       <div>
         <p>输出节点</p>
         <button
+          type="button"
           onClick={() => {
             setIsRunning(isRunning => !isRunning)
             toggleAudio()
