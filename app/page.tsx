@@ -57,7 +57,7 @@ const nodeTypes = {
 }
 
 export default function Home() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
+  const [nodes, _setNodes, onNodesChange] = useNodesState(initialNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
 
   const onConnect = (params: Connection) => {
