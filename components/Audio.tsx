@@ -1,68 +1,83 @@
-const context = new AudioContext()
+let context: AudioContext | null = null
+const nodes = new Map<string, AudioNode>()
 
-const osc = context.createOscillator()
-osc.frequency.value = 220
-osc.type = 'square'
-osc.start()
+if (typeof window !== 'undefined') {
+  // 仅在客户端环境中初始化 AudioContext
+  context = new (window.AudioContext || (window as any).webkitAudioContext)()
 
-const volume = context.createGain()
-volume.gain.value = 0.5
+  const osc = context.createOscillator()
+  osc.frequency.value = 220
+  osc.type = 'square'
+  osc.start()
 
-const out = context.destination
+  const volume = context.createGain()
+  volume.gain.value = 0.5
 
-// osc.connect(volume)
-// volume.connect(out)
+  const out = context.destination
 
-const nodes = new Map()
+  // 建立默认的音频节点连接
+  osc.connect(volume)
+  volume.connect(out)
 
-nodes.set('a', osc)
-nodes.set('b', volume)
-nodes.set('c', out)
+  nodes.set('a', osc)
+  nodes.set('b', volume)
+  nodes.set('c', out)
+}
 
 export function isRunning() {
-  return context.state === 'running'
+  return context?.state === 'running'
 }
 
 export function toggleAudio() {
+  if (!context)
+    return
   return isRunning() ? context.suspend() : context.resume()
 }
 
 export function updateAudioNode(id: string, data: Record<string, any>) {
   const node = nodes.get(id)
+  if (!node)
+    return
 
   for (const [key, val] of Object.entries(data)) {
-    if (node[key] instanceof AudioParam) {
-      node[key].value = val
+    if ((node as any)[key] instanceof AudioParam) {
+      ;(node as any)[key].value = val
     }
     else {
-      node[key] = val
+      ;(node as any)[key] = val
     }
   }
 }
 
 export function removeAudioNode(id: string) {
   const node = nodes.get(id)
+  if (!node)
+    return
 
   node.disconnect()
-  node.stop?.()
-
+  if (node instanceof OscillatorNode)
+    node.stop()
   nodes.delete(id)
 }
 
 export function connect(sourceId: string, targetId: string) {
   const source = nodes.get(sourceId)
   const target = nodes.get(targetId)
-
-  source.connect(target)
+  if (source && target)
+    source.connect(target)
 }
 
 export function disconnect(sourceId: string, targetId: string) {
   const source = nodes.get(sourceId)
   const target = nodes.get(targetId)
-  source.disconnect(target)
+  if (source && target)
+    source.disconnect(target)
 }
 
 export function createAudioNode(id: string, type: string, data: Record<string, any>) {
+  if (!context)
+    return
+
   switch (type) {
     case 'osc': {
       const node = context.createOscillator()
@@ -81,5 +96,7 @@ export function createAudioNode(id: string, type: string, data: Record<string, a
       nodes.set(id, node)
       break
     }
+    default:
+      break
   }
 }
