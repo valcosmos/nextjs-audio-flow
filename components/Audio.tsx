@@ -10,6 +10,9 @@ volume.gain.value = 0.5
 
 const out = context.destination
 
+// osc.connect(volume)
+// volume.connect(out)
+
 const nodes = new Map()
 
 nodes.set('a', osc)
