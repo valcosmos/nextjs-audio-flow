@@ -1,6 +1,6 @@
 import { Handle, Position } from '@xyflow/react'
-import type { ChangeEventHandler } from 'react'
 import { useState } from 'react'
+import type { ChangeEventHandler } from 'react'
 import { updateAudioNode } from './Audio'
 
 export interface VolumeNodeProps {

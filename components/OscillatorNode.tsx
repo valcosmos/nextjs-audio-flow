@@ -1,6 +1,6 @@
 import { Handle, Position } from '@xyflow/react'
-import type { ChangeEventHandler } from 'react'
 import { useState } from 'react'
+import type { ChangeEventHandler } from 'react'
 import { updateAudioNode } from './Audio'
 
 export interface OscillatorNodeProps {
@@ -13,7 +13,7 @@ export interface OscillatorNodeProps {
 
 export function OscillatorNode({ id, data }: OscillatorNodeProps) {
   const [frequency, setFrequency] = useState(data.frequency)
-  const [type, setType] = useState(data.type)
+  const [_type, setType] = useState(data.type)
 
   const changeFrequency: ChangeEventHandler<HTMLInputElement> = (e) => {
     setFrequency(+e.target.value)
